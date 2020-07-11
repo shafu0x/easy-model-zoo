@@ -22,4 +22,4 @@ Bisenet | 50 | 74.7% | [here](https://github.com/CoinCheung/BiSeNet) | [arxiv](h
 
 | Model | Speed (GTX 1070) in FPS | COCO MAP | Original Repo | Paper |
 | ----- | ----- | ----- | ----- | ----- |
-YOLACT | 27 | 28.2% | [here](https://github.com/dbolya/yolact) | [arxiv](https://arxiv.org/abs/1904.02689)
+YOLACT (Resnet50-FPN) | 27 | 28.2% | [here](https://github.com/dbolya/yolact) | [arxiv](https://arxiv.org/abs/1904.02689)
