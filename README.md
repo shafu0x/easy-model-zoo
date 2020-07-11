@@ -17,3 +17,9 @@ EfficientDet-d1 | 23 | 39.6% | [here](https://github.com/zylo117/Yet-Another-Eff
 | Model | Speed (GTX 1070) in FPS | Cityscapes MIOU | Original Repo | Paper |
 | ----- | ----- | ----- | ----- | ----- |
 Bisenet | 50 | 74.7% | [here](https://github.com/CoinCheung/BiSeNet) | [arxiv](https://arxiv.org/abs/1808.00897)
+
+## Instance Segmentation
+
+| Model | Speed (GTX 1070) in FPS | COCO MAP | Original Repo | Paper |
+| ----- | ----- | ----- | ----- | ----- |
+YOLACT | 27 | 28.2% | [here](https://github.com/dbolya/yolact) | [arxiv](https://arxiv.org/abs/1904.02689)
