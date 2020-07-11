@@ -1,0 +1,27 @@
+# classes:
+# 0: Person
+# 1: Bicycle
+# 2: Car
+# 3: Motorcylce
+# 5: Bus
+# 7: Truck
+
+DOCKER_ENV:
+  CONFIG_FILE: ./data/mask_rcnn_R_50_FPN_3x.yaml
+  MODEL_FILE: ./data/model_final_f10217.pkl
+  SCORE_THRESHOLD: O.5
+  CLASSES_TO_PREDICT:
+    PERSON: [0]
+    VEHICLES: [1,2,3,5,7]
+  INPUT_SIZE: [800, 450]
+
+TEST_DOCKER_ENV:
+  CONFIG_FILE: /workspaces/sp2-ai-detectron2/src/mask_rcnn_R_50_FPN_3x.yaml
+  MODEL_FILE: /workspaces/sp2-ai-detectron2/src/model_final_f10217.pkl
+  SCORE_THRESHOLD: O.5
+  CLASSES_TO_PREDICT:
+    PERSON: [0]
+    VEHICLES: [1,2,3,5,7]
+  INPUT_SIZE: [800, 450]
+
+TEST_IMAGE: /workspaces/sp2-ai-detectron2/data/test.png

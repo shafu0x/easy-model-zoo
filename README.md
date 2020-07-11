@@ -6,6 +6,12 @@ The only **requirement** of theses models is that they are pip installable.
 
 PRs are always welcome!
 
+## Object Detection
+
+| Model | Speed (GTX 1070) in FPS | COCO AP | Original Repo | Paper |
+| ----- | ----- | ----- | ----- | ----- |
+EfficientDet-d1 | 23 | 39.6% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
+
 ## Semantic Segmentation
 
 | Model | Speed (GTX 1070) in FPS | Cityscapes MIOU | Original Repo | Paper |
