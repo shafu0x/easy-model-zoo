@@ -29,7 +29,7 @@ Bisenet | 50 | 74.7% | [bisenet.pth](https://github.com/SharifElfouly/BiSeNet/bl
 ## Instance Segmentation
 
 | Model Name | Speed (GTX 1070) in FPS | COCO MAP | Weights | Original Repo | Paper |
-| ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| ----- | ----- | ----- | ----- | ----- | ----- |
 YOLACT (Resnet50-FPN) | 27 | 28.2% | [yolact_resnet50_54_800000.pth](https://drive.google.com/file/d/1yp7ZbbDwvMiFJEq4ptVKTYTI2VeRDXl0/view?usp=sharing) |[here](https://github.com/dbolya/yolact) | [arxiv](https://arxiv.org/abs/1904.02689)
 
 # Getting Started
