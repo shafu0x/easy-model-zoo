@@ -3,6 +3,7 @@ from PIL import Image
 
 from efficientdet.run import Model as EfficientDetModel
 from bisenet.bisenet import Model as BisenetModel 
+from yolact.run import Model as YOLACTModel
 
 class Model:
     def __init__(self, model_name, weights, device='CPU'):
@@ -12,7 +13,7 @@ class Model:
     def init_model(self, model_name, weights):
         if model_name == 'EfficientDet-d1': model = EfficientDetModel(weights)
         if model_name == 'Bisenet': model = BisenetModel(weights)
-        if model_name == 'YOLACT': return None
+        if model_name == 'YOLACT': model = YOLACTModel(weights)
 
         if model != None: print(f'{model_name} was initialized correctly.')
         else            : raise Exception(f'Model with name {model_name} could not be found!')
@@ -41,9 +42,18 @@ if __name__ == '__main__':
     print(o)
     """
 
+    """
     # BiseNet
     weights = '/home/sharif/Desktop/BiSeNet/res/model_final.pth' 
     model = Model('Bisenet', weights, 'GPU')
     o = model.run(img_path)
     print(o)
+    """
 
+    """
+    # YOLACT
+    weights = '/home/sharif/Downloads/yolact_resnet50_54_800000.pth' 
+    model = Model('YOLACT', weights, 'GPU')
+    o = model.run(img_path)
+    print(o)
+    """
