@@ -2,12 +2,12 @@ import time
 import torch
 from torch.backends import cudnn
 
-from backbone import EfficientDetBackbone
+from .backbone import EfficientDetBackbone
 import cv2
 import numpy as np
 
-from efficientdet.utils import BBoxTransform, ClipBoxes
-from utils.utils import invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
+from .efficientdet.utils import BBoxTransform, ClipBoxes
+from .utils.utils import invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 
 compound_coef = 1
 force_input_size = None  # set None to use default size
@@ -83,10 +83,10 @@ def preprocess(ori_imgs, max_size=512, mean=(0.406, 0.456, 0.485), std=(0.225, 0
 
 
 class Model:
-    def __init__(self):
+    def __init__(self, weights):
         model = EfficientDetBackbone(compound_coef=compound_coef, num_classes=len(obj_list),
                                     ratios=anchor_ratios, scales=anchor_scales)
-        model.load_state_dict(torch.load(f'data/efficientdet-d1.pth'))
+        model.load_state_dict(torch.load(weights))
         model.requires_grad_(False)
         model.eval()
 
@@ -97,7 +97,7 @@ class Model:
 
         self.model = model
 
-    def predict(self, img):
+    def run(self, img):
         img = np.expand_dims(img, axis=0)
         ori_imgs, framed_imgs, framed_metas = preprocess(img, max_size=input_size)
 
