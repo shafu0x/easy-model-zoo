@@ -384,3 +384,24 @@ def run(model_f, img_f):
     out = net(im)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
     
     return out
+
+class Model:
+    def __init__(self, weights):
+        net = BiSeNet(n_classes=19)
+        net.load_state_dict(torch.load(weights, map_location='cpu'))
+        self.net = net
+        self.net.eval()
+        self.net.cuda()
+
+    def run(self, img):
+        to_tensor = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ])
+        im = to_tensor(img).unsqueeze(0).cuda()
+
+        out = self.net(im)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
+        
+        return out
+
+
