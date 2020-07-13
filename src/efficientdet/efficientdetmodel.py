@@ -6,10 +6,12 @@ from .backbone import EfficientDetBackbone
 import cv2
 import numpy as np
 
+from ..model import Model
+
 from .efficientdet.utils import BBoxTransform, ClipBoxes
 from .utils.utils import invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 
-compound_coef = 1
+compound_coef = 0
 force_input_size = None  # set None to use default size
 
 # replace this part with your project's anchor config
@@ -82,8 +84,9 @@ def preprocess(ori_imgs, max_size=512, mean=(0.406, 0.456, 0.485), std=(0.225, 0
     return ori_imgs, framed_imgs, framed_metas
 
 
-class Model:
-    def __init__(self, weights):
+class EfficientDetModel(Model):
+    def __init__(self, name, weights):
+        super().__init__(name, weights)
         model = EfficientDetBackbone(compound_coef=compound_coef, num_classes=len(obj_list),
                                     ratios=anchor_ratios, scales=anchor_scales)
         model.load_state_dict(torch.load(weights))
@@ -97,7 +100,8 @@ class Model:
 
         self.model = model
 
-    def run(self, img):
+    def _preprocess(self, image):
+        img = Model.img2arr(image)
         img = np.expand_dims(img, axis=0)
         ori_imgs, framed_imgs, framed_metas = preprocess(img, max_size=input_size)
 
@@ -108,6 +112,11 @@ class Model:
 
         x = x.to(torch.float32 if not use_float16 else torch.float16).permute(0, 3, 1, 2)
 
+        return x, framed_metas
+
+    def run(self, image):
+        x, framed_metas = self._preprocess(image)
+        
         with torch.no_grad():
             features, regression, classification, anchors = self.model(x)
 

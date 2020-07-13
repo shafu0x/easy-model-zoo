@@ -400,8 +400,9 @@ class Model:
             ])
         im = to_tensor(img).unsqueeze(0).cuda()
 
+    
         out = self.net(im)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
-        
+
         return out
 
 
