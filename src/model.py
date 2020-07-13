@@ -27,13 +27,21 @@ class Model:
     def visualize(self):
         pass
 
-    def calc_inf_time(self, n, sz=(850,650)):
+    def _calc_inf_time(self, n=100, sz=(850,600)):
         'Run model `n` times on array of size `sz` and calc average inference time'
-        img = np.random.randn(1, 3, sz[0], sz[1])
+        img = np.random.randn(1, sz[0], sz[1], 3)
+        print(f'Calculating inference time for image with size {sz}:')
+
+        # First inference is usually much slower. Therefore it is not used for the calculation.
+        self.run(img)
+
         times = []
         for i in range(n):
+            print(f'{i+1}/{n}')
             s = time.time()
-            self.model(img)
+            self.run(img)
             e = time.time()
             times.append(e-s)
-        print(f'Average inference time for array with size {sz} is {mean(times)} ms.')
+        mean = sum(times)/len(times)
+        print(f'Average inference time: {np.round(mean,3)} ms.')
+        print(f'FPS: {np.round(1/mean,2)}')

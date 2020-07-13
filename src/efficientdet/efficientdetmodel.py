@@ -11,7 +11,7 @@ from ..model import Model
 from .efficientdet.utils import BBoxTransform, ClipBoxes
 from .utils.utils import invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 
-compound_coef = 0
+compound_coef = 7
 force_input_size = None  # set None to use default size
 
 # replace this part with your project's anchor config
@@ -102,7 +102,8 @@ class EfficientDetModel(Model):
 
     def _preprocess(self, image):
         img = Model.img2arr(image)
-        img = np.expand_dims(img, axis=0)
+        if len(img.shape) <= 3: img = np.expand_dims(img, axis=0)
+
         ori_imgs, framed_imgs, framed_metas = preprocess(img, max_size=input_size)
 
         if use_cuda:
