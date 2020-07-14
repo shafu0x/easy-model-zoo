@@ -1,5 +1,7 @@
 # Pretrained-Model-Zoo
 
+We don't discriminate against PyTorch, Tensorflow or anyone else ;) This is a home for evey easy runnable model.
+
 Are you also frustrated by the installation process of different models? You are tired of Docker and C extensions failing while compiling. You just want to try out a new model? [I agree!](https://towardsdatascience.com/running-deep-learning-models-is-complicated-and-here-is-why-35a4e325486c) You just found the right place!
 
 The only **requirement** of theses models is that they are pip installable.
