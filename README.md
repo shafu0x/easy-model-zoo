@@ -16,7 +16,10 @@ Simply run:
 
 # Pre-trained Models
 
-**IMPORTANT**: Inference speed was measured on a **GTX 1070** and includes preprocessing.
+**Benchmarks**: 
+- All benchmarks include pre- and postprocessing.
+- GPU used: **GeForce GTX 1070**
+- CPU used: **Intel(R) Core(TM) i5-7300HQ CPU @ 2.50GHz**
 
 ## Object Detection
 
@@ -35,9 +38,9 @@ EfficientDet-d7 | 763 | 1.31 | 53.7% | [efficientdet-d7.pth](https://github.com/
 
 ## Semantic Segmentation
 
-| Model Name | Speed (GTX 1070) in FPS | Cityscapes MIOU | Weights | Original Repo | Paper |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-Bisenet | 50 | 74.7% | [bisenet.pth](https://github.com/SharifElfouly/BiSeNet/blob/master/res/model_final.pth) | [here](https://github.com/CoinCheung/BiSeNet) | [arxiv](https://arxiv.org/abs/1808.00897)
+| Model Name | MS (GPU) | FPS (GPU) | MS (CPU) | FPS (CPU)| Cityscapes MIOU | Weights | Original Repo | Paper |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | 
+Bisenet | 37 | 50  | 613 | 1.63 | 74.7% | [bisenet.pth](https://github.com/SharifElfouly/BiSeNet/blob/master/res/model_final.pth) | [here](https://github.com/CoinCheung/BiSeNet) | [arxiv](https://arxiv.org/abs/1808.00897)
 
 ## Instance Segmentation
 

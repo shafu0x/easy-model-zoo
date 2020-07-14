@@ -12,9 +12,14 @@ from ..model import Model
 
 resnet18_url = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 
+use_cuda = False
+
 #  from torch.nn import BatchNorm2d
 def BatchNorm2d(out_chan):
-    return nn.SyncBatchNorm.convert_sync_batchnorm(nn.BatchNorm2d(out_chan))
+    if use_cuda: 
+        return nn.SyncBatchNorm.convert_sync_batchnorm(nn.BatchNorm2d(out_chan))
+    else:
+        return nn.BatchNorm2d(out_chan)
 
 
 def conv3x3(in_planes, out_planes, stride=1):
@@ -388,26 +393,29 @@ def run(model_f, img_f):
     return out
 
 class BisenetModel(Model):
-    def __init__(self, name, weights):
-        super().__init__(name, weights)
+    def __init__(self, name, weights, device='GPU'):
+        super().__init__(name, weights, device)
+        # very hacky and bad code.
+        global use_cuda
+        use_cuda = self.use_cuda
 
     def _init_model(self, weights):
         model = BiSeNet(n_classes=19)
         model.load_state_dict(torch.load(weights, map_location='cpu'))
         model.eval()
-        model.cuda()
+        if self.use_cuda: model.cuda()
         return model
 
     def _preprocess(self, image):
         img = Model.img2arr(image)
         import numpy as np
         img = np.squeeze(img)
-        print(img.shape)
         to_tensor = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
             ])
-        img = to_tensor(img).unsqueeze(0).cuda().float()
+        img = to_tensor(img).unsqueeze(0).float()
+        if self.use_cuda: img = img.cuda()
         return img
 
     def run(self, img):

@@ -11,7 +11,7 @@ class ModelRunner:
         self.model = self.init_model(model_name, weights, device)
 
     def init_model(self, model_name, weights, device):
-        if model_name == 'Bisenet': model = BisenetModel('Bisenent', weights, device)
+        if model_name == 'Bisenet': model = BisenetModel(model_name, weights, device)
         if model_name == 'YOLACT': model = YOLACTModel(weights)
         # There are 8 multiple EfficientDet variants
         if 'EfficientDet' in model_name: model = EfficientDetModel(model_name, weights, device)
@@ -31,19 +31,19 @@ class ModelRunner:
 if __name__ == '__main__':
     img_path = '/home/sharif/Downloads/pp_gesicht.jpg'
 
+    """
     # EfficientDet
     weights = '/home/sharif/Downloads/efficientdet-d1.pth'
     model_runner = ModelRunner('EfficientDet-d1', weights, 'GPU')
     #o = model_runner.run(img_path)
     #print(o)
     model_runner.calc_inf_time(10)
-
     """
+
     # BiseNet
     weights = '/home/sharif/Desktop/BiSeNet/res/model_final.pth' 
     model_runner = ModelRunner('Bisenet', weights, 'GPU')
     model_runner.calc_inf_time(10)
-    """
 
     """
     # YOLACT
