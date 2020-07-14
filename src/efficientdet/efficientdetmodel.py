@@ -11,7 +11,6 @@ from ..model import Model
 from .efficientdet.utils import BBoxTransform, ClipBoxes
 from .utils.utils import invert_affine, postprocess, STANDARD_COLORS, standard_to_bgr, get_index_label, plot_one_box
 
-compound_coef = 7
 force_input_size = None  # set None to use default size
 
 # replace this part with your project's anchor config
@@ -40,7 +39,6 @@ obj_list = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train'
 color_list = standard_to_bgr(STANDARD_COLORS)
 # tf bilinear interpolation is different from any other's, just make do
 input_sizes = [512, 640, 768, 896, 1024, 1280, 1280, 1536]
-input_size = input_sizes[compound_coef] if force_input_size is None else force_input_size
 
 def aspectaware_resize_padding(image, width, height, interpolation=None, means=None):
     old_h, old_w, c = image.shape
@@ -87,6 +85,12 @@ def preprocess(ori_imgs, max_size=512, mean=(0.406, 0.456, 0.485), std=(0.225, 0
 class EfficientDetModel(Model):
     def __init__(self, name, weights):
         super().__init__(name, weights)
+        self.model = self._init_model(weights)
+
+    def _init_model(self, weights):
+        compound_coef = self._parse_name(self.name)
+        self.input_size = input_sizes[compound_coef] if force_input_size is None else force_input_size
+
         model = EfficientDetBackbone(compound_coef=compound_coef, num_classes=len(obj_list),
                                     ratios=anchor_ratios, scales=anchor_scales)
         model.load_state_dict(torch.load(weights))
@@ -98,13 +102,17 @@ class EfficientDetModel(Model):
         if use_float16:
             model = model.half()
 
-        self.model = model
+        return model
+
+    def _parse_name(self, name):
+        for i in range(8):
+            if str(i) in name: return i
 
     def _preprocess(self, image):
         img = Model.img2arr(image)
         if len(img.shape) <= 3: img = np.expand_dims(img, axis=0)
 
-        ori_imgs, framed_imgs, framed_metas = preprocess(img, max_size=input_size)
+        ori_imgs, framed_imgs, framed_metas = preprocess(img, max_size=self.input_size)
 
         if use_cuda:
             x = torch.stack([torch.from_numpy(fi).cuda() for fi in framed_imgs], 0)
@@ -132,7 +140,8 @@ class EfficientDetModel(Model):
             out = invert_affine(framed_metas, out)
 
             return out
-
+    
+    @staticmethod
     def parse(out):
         pred_objs = []
         boxes = out[0]['rois']
@@ -140,14 +149,3 @@ class EfficientDetModel(Model):
         for i, obj_cl in enumerate(classes):
             pass
         return out[0]['rois'], out[0]['class_ids']
-
-# only for testing
-if __name__ == '__main__':
-    m = Model()
-    import cv2
-    img_path = '/home/sharif/Downloads/pp_gesicht.jpg'
-    ori_imgs = cv2.imread(img_path)
-    #ori_imgs = np.expand_dims(ori_imgs, axis=0)
-    print(ori_imgs.shape)
-    p = m.predict(ori_imgs)
-    print(p)

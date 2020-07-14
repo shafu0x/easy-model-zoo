@@ -31,7 +31,7 @@ if __name__ == '__main__':
     img_path = '/home/sharif/Downloads/pp_gesicht.jpg'
 
     # EfficientDet
-    weights = '/home/sharif/Downloads/efficientdet-d7.pth'
+    weights = '/home/sharif/Downloads/efficientdet-d1.pth'
     model_runner = ModelRunner('EfficientDet-d1', weights, 'GPU')
     #o = model_runner.run(img_path)
     #print(o)
