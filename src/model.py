@@ -3,8 +3,10 @@ import numpy as np
 from PIL import Image
 
 class Model:
-    def __init__(self, name, weights_f):
-        self.name = name
+    def __init__(self, name, weights_f, device='GPU'):
+        self.name = name 
+        if device != 'GPU': self.use_cuda = False
+        else              : self.use_cuda = True
         self.model = self._init_model(weights_f)
 
     def _init_model(self, weights_f): 

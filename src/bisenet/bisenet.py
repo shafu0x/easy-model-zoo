@@ -8,6 +8,8 @@ import torchvision.transforms as transforms
 
 from PIL import Image
 
+from ..model import Model
+
 resnet18_url = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 
 #  from torch.nn import BatchNorm2d
@@ -385,23 +387,33 @@ def run(model_f, img_f):
     
     return out
 
-class Model:
-    def __init__(self, weights):
-        net = BiSeNet(n_classes=19)
-        net.load_state_dict(torch.load(weights, map_location='cpu'))
-        self.net = net
-        self.net.eval()
-        self.net.cuda()
+class BisenetModel(Model):
+    def __init__(self, name, weights):
+        super().__init__(name, weights)
 
-    def run(self, img):
+    def _init_model(self, weights):
+        model = BiSeNet(n_classes=19)
+        model.load_state_dict(torch.load(weights, map_location='cpu'))
+        model.eval()
+        model.cuda()
+        return model
+
+    def _preprocess(self, image):
+        img = Model.img2arr(image)
+        import numpy as np
+        img = np.squeeze(img)
+        print(img.shape)
         to_tensor = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
             ])
-        im = to_tensor(img).unsqueeze(0).cuda()
+        img = to_tensor(img).unsqueeze(0).cuda().float()
+        return img
 
+    def run(self, img):
+        img = self._preprocess(img)
     
-        out = self.net(im)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
+        out = self.model(img)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
 
         return out
 

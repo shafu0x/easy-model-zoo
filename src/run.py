@@ -2,18 +2,19 @@ import numpy as np
 from PIL import Image
 
 from src.efficientdet.efficientdetmodel import EfficientDetModel
-from src.bisenet.bisenet import Model as BisenetModel 
+from src.bisenet.bisenet import BisenetModel 
 from src.yolact.run import Model as YOLACTModel
 
 class ModelRunner:
     def __init__(self, model_name, weights, device='CPU'):
-        self.device = device
-        self.model = self.init_model(model_name, weights)
+        'Encapsulates a model'
+        self.model = self.init_model(model_name, weights, device)
 
-    def init_model(self, model_name, weights):
-        if model_name == 'EfficientDet-d1': model = EfficientDetModel('EfficientDet-d1', weights)
-        if model_name == 'Bisenet': model = BisenetModel(weights)
+    def init_model(self, model_name, weights, device):
+        if model_name == 'Bisenet': model = BisenetModel('Bisenent', weights, device)
         if model_name == 'YOLACT': model = YOLACTModel(weights)
+        # There are 8 multiple EfficientDet variants
+        if 'EfficientDet' in model_name: model = EfficientDetModel(model_name, weights, device)
 
         if model != None: print(f'{model_name} was initialized correctly.')
         else            : raise Exception(f'Model with name {model_name} could not be found!')
@@ -37,17 +38,11 @@ if __name__ == '__main__':
     #print(o)
     model_runner.calc_inf_time(10)
 
-
     """
     # BiseNet
     weights = '/home/sharif/Desktop/BiSeNet/res/model_final.pth' 
-    model = Model('Bisenet', weights, 'GPU')
-    for _ in range(100):
-        import time
-        s = time.time()
-        o = model.run(img_path)
-        e = time.time()
-        print(1/(e-s))
+    model_runner = ModelRunner('Bisenet', weights, 'GPU')
+    model_runner.calc_inf_time(10)
     """
 
     """

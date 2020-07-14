@@ -20,7 +20,6 @@ anchor_scales = [2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)]
 threshold = 0.2
 iou_threshold = 0.2
 
-use_cuda = True
 use_float16 = False
 cudnn.fastest = True
 cudnn.benchmark = True
@@ -83,8 +82,8 @@ def preprocess(ori_imgs, max_size=512, mean=(0.406, 0.456, 0.485), std=(0.225, 0
 
 
 class EfficientDetModel(Model):
-    def __init__(self, name, weights):
-        super().__init__(name, weights)
+    def __init__(self, name, weights, device='GPU'):
+        super().__init__(name, weights, device)
         self.model = self._init_model(weights)
 
     def _init_model(self, weights):
@@ -97,7 +96,7 @@ class EfficientDetModel(Model):
         model.requires_grad_(False)
         model.eval()
 
-        if use_cuda:
+        if self.use_cuda:
             model = model.cuda()
         if use_float16:
             model = model.half()
@@ -114,7 +113,7 @@ class EfficientDetModel(Model):
 
         ori_imgs, framed_imgs, framed_metas = preprocess(img, max_size=self.input_size)
 
-        if use_cuda:
+        if self.use_cuda:
             x = torch.stack([torch.from_numpy(fi).cuda() for fi in framed_imgs], 0)
         else:
             x = torch.stack([torch.from_numpy(fi) for fi in framed_imgs], 0)
