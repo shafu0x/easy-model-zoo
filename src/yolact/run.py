@@ -8,19 +8,15 @@ import cv2
 
 from .data import set_cfg
 
-def evalimage(net:Yolact, img, save_path:str=None):
-    net.detect.use_fast_nms = True
-    net.detect.use_cross_class_nms = False
-    
-    frame = torch.from_numpy(img).cuda().float()
-    batch = FastBaseTransform()(frame.unsqueeze(0))
-    
-    preds = net(batch)
-    return preds
+from ..model import Model
 
-class Model:
-    def __init__(self, weights):
-        cuda = True
+
+class YOLACTModel(Model):
+    def __init__(self,name, weights, device='GPU'):
+        super().__init__(name, weights, device)
+        self.model = self._init_model(weights)
+    
+    def _init_model(self, weights):
         config = None
 
         if config is None:
@@ -32,7 +28,7 @@ class Model:
 
         with torch.no_grad():
 
-            if cuda:
+            if self.use_cuda:
                 cudnn.fastest = True
                 torch.set_default_tensor_type('torch.cuda.FloatTensor')
             else:
@@ -44,12 +40,26 @@ class Model:
             net.eval()
             print(' Done.')
 
-            if cuda:
+            if self.use_cuda:
                 net = net.cuda()
-        self.model = net
+            return net
     
+    def evalimage(self,net:Yolact, img, save_path:str=None):
+        net.detect.use_fast_nms = True
+        net.detect.use_cross_class_nms = False
+        
+        img = Model.img2arr(img).reshape(1,3,850,650)
+
+        frame = torch.from_numpy(img).float()
+        print(frame.shape)
+        if self.use_cuda: frame = frame.cuda()
+        #batch = FastBaseTransform()(frame.unsqueeze(0))
+
+        preds = net(frame)
+        return preds
+
     def run(self, img):
-        return evalimage(self.model, img)
+        return self.evalimage(self.model, img)
         
 
 if __name__ == '__main__':

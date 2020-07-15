@@ -3,7 +3,7 @@ from PIL import Image
 
 from src.efficientdet.efficientdetmodel import EfficientDetModel
 from src.bisenet.bisenet import BisenetModel 
-from src.yolact.run import Model as YOLACTModel
+from src.yolact.run import YOLACTModel
 
 class ModelRunner:
     def __init__(self, model_name, weights, device='CPU'):
@@ -12,7 +12,7 @@ class ModelRunner:
 
     def init_model(self, model_name, weights, device):
         if model_name == 'Bisenet': model = BisenetModel(model_name, weights, device)
-        if model_name == 'YOLACT': model = YOLACTModel(weights)
+        if model_name == 'YOLACT': model = YOLACTModel(model_name, weights, device)
         # There are 8 multiple EfficientDet variants
         if 'EfficientDet' in model_name: model = EfficientDetModel(model_name, weights, device)
 
@@ -40,15 +40,16 @@ if __name__ == '__main__':
     model_runner.calc_inf_time(10)
     """
 
+    """
     # BiseNet
     weights = '/home/sharif/Desktop/BiSeNet/res/model_final.pth' 
     model_runner = ModelRunner('Bisenet', weights, 'GPU')
     model_runner.calc_inf_time(10)
-
     """
+
     # YOLACT
     weights = '/home/sharif/Downloads/yolact_resnet50_54_800000.pth' 
-    model = Model('YOLACT', weights, 'GPU')
-    o = model.run(img_path)
-    print(o)
-    """
+    model_runner = ModelRunner('YOLACT', weights, 'CPU')
+    #o = model.run(img_path)
+    #print(o)
+    model_runner.calc_inf_time(10)
