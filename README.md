@@ -1,10 +1,12 @@
-# Pretrained-Model-Zoo
+# Easy-Model-Zoo
 
-We don't discriminate against PyTorch, Tensorflow or anyone else ;) This is a home for evey easy runnable model.
+We don't discriminate against PyTorch, Tensorflow or anyone else ;) This is a home for evey **easy** runnable model.
 
 Are you also frustrated by the installation process of different models? You are tired of Docker and C extensions failing while compiling. You just want to try out a new model? [I agree!](https://towardsdatascience.com/running-deep-learning-models-is-complicated-and-here-is-why-35a4e325486c) You just found the right place!
 
 The only **requirement** of theses models is that they are pip installable.
+
+You don't have a fancy GPU? Don't worry just run it on the CPU...
 
 PRs are always welcome!
 
@@ -51,7 +53,7 @@ YOLACT (Resnet50-FPN) | 69 |14 | 1397 |0.72 | 28.2% | [yolact_resnet50_54_800000
 # Getting Started
 
 ```
-from ptz import Model
+from emz import Model
 
 IMG_F = 'Full path to your image'
 
@@ -59,7 +61,8 @@ IMG_F = 'Full path to your image'
 # Note: The model automatically figures out what task it will be used for.
 # You can initialize it on the GPU or on the CPU with the device attribute.
 # If it can't find a GPU it will use the CPU.
-model = Model(model_name='YOLACT', device='GPU')
+# NOTE: You don't need to download the weights yourself. The script will do it for you.
+model = Model('YOLACT', device='GPU')
 
 # You can either run the model on an image path or on a numpy array.
 pred = model.run(IMG_F)
