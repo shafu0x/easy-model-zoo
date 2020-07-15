@@ -26,7 +26,8 @@ class Model:
         'Run the model on `image`. `image` can be array or full path to image file.'
         pass
 
-    def visualize(self):
+    def visualize(self, pred):
+        'Vis `pred` on the image'
         pass
 
     def _calc_inf_time(self, n=100, sz=(850,600)):

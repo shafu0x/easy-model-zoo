@@ -5,6 +5,10 @@ from src.efficientdet.efficientdetmodel import EfficientDetModel
 from src.bisenet.bisenet import BisenetModel 
 from src.yolact.run import YOLACTModel
 
+# Google Drive ids for downloading the weights
+EFFICIENTDET_D0='1g1SlGsR0ZQlWlW45S9JIpMPLrmwg1zvV'
+BISENET='1jERXjLfxRNlFBt9UiYWZzxY4a7t-83_8'
+
 class ModelRunner:
     def __init__(self, model_name, weights, device='CPU'):
         'Encapsulates a model'
