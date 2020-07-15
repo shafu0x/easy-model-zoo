@@ -5,7 +5,7 @@ import torch.utils.model_zoo as modelzoo
 from torch.nn import BatchNorm2d
 import torchvision
 import torchvision.transforms as transforms
-
+import numpy as np
 from PIL import Image
 
 from ..model import Model
@@ -393,22 +393,21 @@ def run(model_f, img_f):
     return out
 
 class BisenetModel(Model):
-    def __init__(self, name, weights, device='GPU'):
-        super().__init__(name, weights, device)
-        # very hacky and bad code.
+    def __init__(self, name, weights_id, device='GPU'):
+        super().__init__(name, weights_id, device)
+        # very hacky and bad
         global use_cuda
         use_cuda = self.use_cuda
 
-    def _init_model(self, weights):
+    def _init_model(self):
         model = BiSeNet(n_classes=19)
-        model.load_state_dict(torch.load(weights, map_location='cpu'))
+        model.load_state_dict(torch.load(self.weights_f, map_location='cpu'))
         model.eval()
         if self.use_cuda: model.cuda()
         return model
 
     def _preprocess(self, image):
         img = Model.img2arr(image)
-        import numpy as np
         img = np.squeeze(img)
         to_tensor = transforms.Compose([
             transforms.ToTensor(),
@@ -420,9 +419,7 @@ class BisenetModel(Model):
 
     def run(self, img):
         img = self._preprocess(img)
-    
         out = self.model(img)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
-
         return out
 
 

@@ -82,25 +82,21 @@ def preprocess(ori_imgs, max_size=512, mean=(0.406, 0.456, 0.485), std=(0.225, 0
 
 
 class EfficientDetModel(Model):
-    def __init__(self, name, weights, device='GPU'):
-        super().__init__(name, weights, device)
-        self.model = self._init_model(self.weights_f)
+    def __init__(self, name, weights_id, device='GPU', coeff=0):
+        self.compound_coef = coeff
+        super().__init__(name, weights_id, device)
 
-    def _init_model(self, weights):
-        compound_coef = self._parse_name(self.name)
-        self.input_size = input_sizes[compound_coef] if force_input_size is None else force_input_size
+    def _init_model(self):
+        self.input_size = input_sizes[self.compound_coef] if force_input_size is None else force_input_size
 
-        model = EfficientDetBackbone(compound_coef=compound_coef, num_classes=len(obj_list),
+        model = EfficientDetBackbone(compound_coef=self.compound_coef, num_classes=len(obj_list),
                                     ratios=anchor_ratios, scales=anchor_scales)
-        model.load_state_dict(torch.load(weights))
+        model.load_state_dict(torch.load(self.weights_f))
         model.requires_grad_(False)
         model.eval()
 
-        if self.use_cuda:
-            model = model.cuda()
-        if use_float16:
-            model = model.half()
-
+        if self.use_cuda: model = model.cuda()
+        if use_float16: model = model.half()
         return model
 
     def _parse_name(self, name):

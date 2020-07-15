@@ -8,20 +8,32 @@ from src.yolact.run import YOLACTModel
 from src.download import download_weights
 
 # Google Drive ids for downloading the weights
-EFFICIENTDET_D0='1g1SlGsR0ZQlWlW45S9JIpMPLrmwg1zvV'
-BISENET='1jERXjLfxRNlFBt9UiYWZzxY4a7t-83_8'
+model_ids = {
+    'EFFICIENTDET_D0':'1g1SlGsR0ZQlWlW45S9JIpMPLrmwg1zvV',
+    'EFFICIENTDET_D1':'1rWuYVoe22NpUUfTlqAkxCQ69vyn0f_OQ',
+    'EFFICIENTDET_D2':'1nqjApuGV-ejcqx8MjZJThRIo_8LMRTlc',
+    'EFFICIENTDET_D3':'1eGJTEdxy40xTEJNUrTBYlUTJz-xZJGX1',
+    'EFFICIENTDET_D4':'1YjxVzf7dOKdTiVMFgWmrTaqVtiwLHmkf',
+    'EFFICIENTDET_D5':'1vYlC0X1d_AvlFoncYFLkMGWNU_UeoM6p',
+    'EFFICIENTDET_D6':'127iopie3JDTPVv3d75XOzCYxo7nAQfYQ',
+    'EFFICIENTDET_D7':'1j8cYgfylD4PTsyh8IC3qtwpDedx7eWPk',
+    'BISENET':'1-xn4CkE33sq5ZuKh8IJAv79743ImHh7l',
+    'YOLACT-RESNET50':'1PN_cBJRkyJzxdmlNU3wDIQlivwELsY0_',
+}
 
 class ModelRunner:
-    def __init__(self, model_name, device='CPU'):
-        'Encapsulates a model'
+    def __init__(self, model_name, device='GPU'):
         self.model = self.init_model(model_name, device)
 
     def init_model(self, model_name, device):
-        if model_name == 'Bisenet': 
-            model = BisenetModel(model_name, BISENET)
-        if model_name == 'YOLACT': model = YOLACTModel(model_name, weights, device)
-        # There are 8 multiple EfficientDet variants
-        if 'EfficientDet' in model_name: model = EfficientDetModel(model_name, EFFICIENTDET_D0, device)
+        if model_name == 'Bisenet': model = BisenetModel(model_name, model_ids['BISENET'], device)
+        if model_name == 'YOLACT-Resnet50': model = YOLACTModel(model_name, model_ids['YOLACT-RESNET50'], device)
+        # There are 8 different EfficientDet variants
+        if 'EfficientDet' in model_name:
+            for i in range(8): 
+                if str(i) in model_name: 
+                    coeff = i; break
+            model = EfficientDetModel(model_name, model_ids[f'EFFICIENTDET_D{i}'], device, coeff)
 
         if model != None: print(f'{model_name} was initialized correctly.')
         else            : raise Exception(f'Model with name {model_name} could not be found!')
@@ -40,22 +52,26 @@ if __name__ == '__main__':
 
     # EfficientDet
     model_runner = ModelRunner('EfficientDet-d0', 'GPU')
-    #o = model_runner.run(img_path)
-    #print(o)
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d1', 'GPU')
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d2', 'CPU')
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d3', 'GPU')
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d4', 'CPU')
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d5', 'GPU')
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d6', 'GPU')
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d7', 'GPU')
     model_runner.calc_inf_time(10)
 
-    """
     # BiseNet
-    weights = '/home/sharif/Desktop/BiSeNet/res/model_final.pth' 
-    model_runner = ModelRunner('Bisenet', weights, 'GPU')
+    model_runner = ModelRunner('Bisenet', 'GPU')
     model_runner.calc_inf_time(10)
 
-    """
-    """
-    # YOLACT
-    weights = '/home/sharif/Downloads/yolact_resnet50_54_800000.pth' 
-    model_runner = ModelRunner('YOLACT', weights, 'CPU')
-    #o = model.run(img_path)
-    #print(o)
+    # YOLACT 
+    model_runner = ModelRunner('YOLACT-Resnet50', 'CPU')
     model_runner.calc_inf_time(10)
-    """

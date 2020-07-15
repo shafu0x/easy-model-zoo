@@ -5,16 +5,14 @@ from PIL import Image
 from src.download import download_weights
 
 class Model:
-    def __init__(self, name, weights_id=None, weights_f=None, device='GPU'):
+    def __init__(self, name, weights_id, device='GPU'):
         self.name = name 
         self.weights_f = download_weights(name, weights_id)
-        if device != 'GPU': self.use_cuda = False
-        else              : self.use_cuda = True
-        #self.model = self._init_model(weights_f)
+        if device == 'GPU': self.use_cuda = True
+        else              : self.use_cuda = False
+        self.model = self._init_model()
 
-    def _init_model(self, weights_f): 
-        'Initialize model with the full path to the weights file'
-        pass
+    def _init_model(self): raise NotImplementedError('You will need to overwrite the `_init_model` method.')
 
     @staticmethod
     def img2arr(img): 
@@ -27,11 +25,11 @@ class Model:
 
     def run(self, image): 
         'Run the model on `image`. `image` can be array or full path to image file.'
-        pass
+        raise NotImplementedError('You will need to overwrite the `run` method.')
 
     def visualize(self, pred):
         'Vis `pred` on the image'
-        pass
+        raise NotImplementedError('You will need to overwrite the `visualize` method.')
 
     def _calc_inf_time(self, n=100, sz=(850,600)):
         'Run model `n` times on array of size `sz` and calc average inference time'

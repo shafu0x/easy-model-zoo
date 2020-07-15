@@ -12,15 +12,14 @@ from ..model import Model
 
 
 class YOLACTModel(Model):
-    def __init__(self,name, weights, device='GPU'):
-        super().__init__(name, weights, device)
-        self.model = self._init_model(weights)
+    def __init__(self,name, weights_id, device='GPU'):
+        super().__init__(name, weights_id, device)
     
-    def _init_model(self, weights):
+    def _init_model(self):
         config = None
 
         if config is None:
-            model_path = SavePath.from_str(weights)
+            model_path = SavePath.from_str(self.weights_f)
             # TODO: Bad practice? Probably want to do a name lookup instead.
             config = model_path.model_name + '_config'
             print('Config not specified. Parsed %s from the file name.\n' % config)
@@ -36,7 +35,7 @@ class YOLACTModel(Model):
 
             print('Loading model...', end='')
             net = Yolact()
-            net.load_weights(weights)
+            net.load_weights(self.weights_f)
             net.eval()
             print(' Done.')
 
@@ -51,7 +50,6 @@ class YOLACTModel(Model):
         img = Model.img2arr(img).reshape(1,3,850,650)
 
         frame = torch.from_numpy(img).float()
-        print(frame.shape)
         if self.use_cuda: frame = frame.cuda()
         #batch = FastBaseTransform()(frame.unsqueeze(0))
 
