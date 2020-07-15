@@ -8,6 +8,9 @@ dest = Path.home()/'.data'
 
 def download_weights(model_name,weights_id):
     if not dest.is_dir(): dest.mkdir()
+    for f in dest.iterdir():
+        if model_name.lower() in f.stem: 
+            return str(dest/f)
 
     url = f'https://drive.google.com/uc?id={weights_id}'
     file_name = f'{model_name}.zip'
