@@ -84,7 +84,7 @@ def preprocess(ori_imgs, max_size=512, mean=(0.406, 0.456, 0.485), std=(0.225, 0
 class EfficientDetModel(Model):
     def __init__(self, name, weights, device='GPU'):
         super().__init__(name, weights, device)
-        self.model = self._init_model(weights)
+        self.model = self._init_model(self.weights_f)
 
     def _init_model(self, weights):
         compound_coef = self._parse_name(self.name)
