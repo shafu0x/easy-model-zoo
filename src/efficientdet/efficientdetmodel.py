@@ -4,7 +4,9 @@ from torch.backends import cudnn
 
 from .backbone import EfficientDetBackbone
 import cv2
+from PIL import Image
 import numpy as np
+from bounding_box import bounding_box as bb
 
 from ..model import Model
 
@@ -135,7 +137,14 @@ class EfficientDetModel(Model):
             out = invert_affine(framed_metas, out)
 
             return out
-    
+
+    def visualize(self, image, pred):
+        img = Model.img2arr(image)
+        rois, class_ids = EfficientDetModel.parse(pred)
+        for i, roi in enumerate(rois):
+            bb.add(img, roi[0],roi[1],roi[2],roi[3], str(class_ids[i]))
+        Image.fromarray(img).show()
+
     @staticmethod
     def parse(out):
         pred_objs = []

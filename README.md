@@ -18,6 +18,8 @@ Simply run:
 
 # Pre-trained Models
 
+**NOTE:** You do NOT have to download the weights file yourself. The `ModelRunner` will do that for you. The links are just for convenience.
+
 **Benchmarks**: 
 - All benchmarks include pre- and postprocessing.
 - GPU used: **GeForce GTX 1070**
@@ -27,28 +29,28 @@ Simply run:
 
 For a full comparison with other Object Detection models see [here](https://paperswithcode.com/sota/object-detection-on-coco).
 
-| Model Name | Speed in ms | Speed in FPS | COCO AP | Weights | Original Repo | Paper |
+| Model Name | Speed in ms | Speed in FPS | COCO AP | Original Repo | Paper | Weights |
 | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-EfficientDet-d0 | 55 | 18 | 33.8% | [efficientdet-d0.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d0.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070) 
-EfficientDet-d1 | 66 | 15 | 39.6% | [efficientdet-d1.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d1.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
-EfficientDet-d2 | 87 | 11.5 | 43.0% | [efficientdet-d2.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d2.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
-EfficientDet-d3 | 142 | 7 | 45.8% | [efficientdet-d3.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d3.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
-EfficientDet-d4 | 250 | 4 | 49.4% | [efficientdet-d4.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d4.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
-EfficientDet-d5 | 500 | 2 | 50.7% | [efficientdet-d5.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d5.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
-EfficientDet-d6 | 666 | 1.5 | 51.7% | [efficientdet-d6.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d6.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)
-EfficientDet-d7 | 763 | 1.31 | 53.7% | [efficientdet-d7.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d7.pth)| [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)  
+EfficientDet-d0 | 55 | 18 | 33.8% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d0.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d0.pth) 
+EfficientDet-d1 | 66 | 15 | 39.6% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d1.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d1.pth)
+EfficientDet-d2 | 87 | 11.5 | 43.0% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d2.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d2.pth)
+EfficientDet-d3 | 142 | 7 | 45.8% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d3.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d3.pth)
+EfficientDet-d4 | 250 | 4 | 49.4% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d4.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d4.pth)|
+EfficientDet-d5 | 500 | 2 | 50.7% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d5.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d5.pth)
+EfficientDet-d6 | 666 | 1.5 | 51.7% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070)| [efficientdet-d6.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d6.pth)
+EfficientDet-d7 | 763 | 1.31 | 53.7% | [here](https://github.com/zylo117/Yet-Another-EfficientDet-Pytorch) | [arxiv](https://arxiv.org/abs/1911.09070) | [efficientdet-d7.pth](https://github.com/zylo117/Yet-Another-Efficient-Pytorch/releases/download/1.0/efficientdet-d7.pth)
 
 ## Semantic Segmentation
 
-| Model Name | MS (GPU) | FPS (GPU) | MS (CPU) | FPS (CPU)| Cityscapes MIOU | Weights | Original Repo | Paper |
+| Model Name | MS (GPU) | FPS (GPU) | MS (CPU) | FPS (CPU)| Cityscapes MIOU  | Original Repo | Paper | Weights |
 | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | 
-Bisenet | 37 | 50  | 613 | 1.63 | 74.7% | [bisenet.pth](https://github.com/SharifElfouly/BiSeNet/blob/master/res/model_final.pth) | [here](https://github.com/CoinCheung/BiSeNet) | [arxiv](https://arxiv.org/abs/1808.00897)
+Bisenet | 37 | 50  | 613 | 1.63 | 74.7%  | [here](https://github.com/CoinCheung/BiSeNet) | [arxiv](https://arxiv.org/abs/1808.00897)| [bisenet.pth](https://github.com/SharifElfouly/BiSeNet/blob/master/res/model_final.pth)
 
 ## Instance Segmentation
 
-| Model Name | MS (GPU) | FPS (GPU) | MS (CPU) | FPS (CPU)| Cityscapes MIOU | Weights | Original Repo | Paper |
+| Model Name | MS (GPU) | FPS (GPU) | MS (CPU) | FPS (CPU)| Cityscapes MIOU  | Original Repo | Paper | Weights |
 | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | 
-YOLACT (Resnet50-FPN) | 69 |14 | 1397 |0.72 | 28.2% | [yolact_resnet50_54_800000.pth](https://drive.google.com/file/d/1yp7ZbbDwvMiFJEq4ptVKTYTI2VeRDXl0/view?usp=sharing) |[here](https://github.com/dbolya/yolact) | [arxiv](https://arxiv.org/abs/1904.02689)
+YOLACT-Resnet50 | 69 |14 | 1397 |0.72 | 28.2%  |[here](https://github.com/dbolya/yolact) | [arxiv](https://arxiv.org/abs/1904.02689)| [yolact_resnet50_54_800000.pth](https://drive.google.com/file/d/1yp7ZbbDwvMiFJEq4ptVKTYTI2VeRDXl0/view?usp=sharing)
 
 # Getting Started
 
