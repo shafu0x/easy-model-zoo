@@ -70,7 +70,7 @@ model = Model('YOLACT', device='GPU')
 pred = model.run(IMG_F)
 
 # Visualize the results.
-model.visualize(pred)
+model.visualize(IMG_F, pred)
 ```
 
 # How to add a new Model?
