@@ -86,8 +86,5 @@ if __name__ == '__main__':
     #model_runner.calc_inf_time(10)
     pred = model_runner.run(img_path)
     #print(pred)
+
     vis = model_runner.visualize(img_path, pred)
-    print(vis.shape)
-    from PIL import Image
-    img = Image.fromarray(vis)
-    img.show()

@@ -46,28 +46,35 @@ class YOLACTModel(Model):
     def evalimage(self,net:Yolact, img, save_path:str=None):
         net.detect.use_fast_nms = True
         net.detect.use_cross_class_nms = False
+
+        frame = torch.from_numpy(cv2.imread(img)).cuda().float()
+        batch = FastBaseTransform()(frame.unsqueeze(0))
+        preds = net(batch)
+
+        return preds
         
+        """
         img = Model.img2arr(img).reshape(1,3,1038,1188)
         print(img.shape)
 
         frame = torch.from_numpy(img).float()
         if self.use_cuda: frame = frame.cuda()
-        #batch = FastBaseTransform()(frame.unsqueeze(0))
+        batch = FastBaseTransform()(frame.unsqueeze(0))
 
-        preds = net(frame)
+        preds = net(batch)
         return preds
+        """
 
     def run(self, img):
         return self.evalimage(self.model, img)
 
     def visualize(self, img, preds):
         from .eval import prep_display
-
-        img = Model.img2arr(img).reshape(3,1038,1188)
-
-        img = torch.Tensor(img)
-
-        return prep_display(preds, img, 1038, 1188)
+        frame = torch.from_numpy(cv2.imread(img)).cuda().float()
+        img_numpy = prep_display(preds, frame, None, None, undo_transform=False)
+        from PIL import Image
+        img = Image.fromarray(img_numpy)
+        img.show()
         
 
 if __name__ == '__main__':
