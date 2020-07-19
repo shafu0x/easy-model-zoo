@@ -47,7 +47,8 @@ class YOLACTModel(Model):
         net.detect.use_fast_nms = True
         net.detect.use_cross_class_nms = False
         
-        img = Model.img2arr(img).reshape(1,3,850,650)
+        img = Model.img2arr(img).reshape(1,3,1038,1188)
+        print(img.shape)
 
         frame = torch.from_numpy(img).float()
         if self.use_cuda: frame = frame.cuda()
@@ -58,6 +59,15 @@ class YOLACTModel(Model):
 
     def run(self, img):
         return self.evalimage(self.model, img)
+
+    def visualize(self, img, preds):
+        from .eval import prep_display
+
+        img = Model.img2arr(img).reshape(3,1038,1188)
+
+        img = torch.Tensor(img)
+
+        return prep_display(preds, img, 1038, 1188)
         
 
 if __name__ == '__main__':
