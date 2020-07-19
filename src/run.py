@@ -51,13 +51,13 @@ class ModelRunner:
         return self.model.visualize(image, pred)
 
 if __name__ == '__main__':
-    img_path = '/home/sharif/Downloads/pp_gesicht.jpg'
+    img_path = '/home/sharif/Downloads/test.png'
 
     # EfficientDet
+    """
     model_runner = ModelRunner('EfficientDet-d0', 'GPU')
     pred = model_runner.run(img_path)
     model_runner.visualize(img_path,pred)
-    """
     model_runner = ModelRunner('EfficientDet-d1', 'GPU')
     model_runner.calc_inf_time(10)
     model_runner = ModelRunner('EfficientDet-d2', 'CPU')
@@ -72,11 +72,15 @@ if __name__ == '__main__':
     model_runner.calc_inf_time(10)
     model_runner = ModelRunner('EfficientDet-d7', 'GPU')
     model_runner.calc_inf_time(10)
+    """
 
     # BiseNet
     model_runner = ModelRunner('Bisenet', 'GPU')
-    model_runner.calc_inf_time(10)
-
+    pred = model_runner.run(img_path)
+    model_runner.visualize(img_path, pred)
+    #model_runner.calc_inf_time(10)
+    
+    """
     # YOLACT 
     model_runner = ModelRunner('YOLACT-Resnet50', 'CPU')
     model_runner.calc_inf_time(10)

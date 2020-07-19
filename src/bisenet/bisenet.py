@@ -385,12 +385,26 @@ def run(model_f, img_f):
         transforms.ToTensor(),
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
         ])
-    im = to_tensor(Image.open(img_f).convert('RGB').resize((850,600))).unsqueeze(0).cuda()
+    im = to_tensor(Image.open(img_f).resize((850,600))).unsqueeze(0).cuda()
 
     # inference
     out = net(im)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
     
     return out
+
+def random_colors(N, bright=True):
+    """
+    Generate random colors.
+    To get visually distinct colors, generate them in HSV space then
+    convert to RGB.
+    """
+    import colorsys
+    import random
+    brightness = 1.0 if bright else 0.7
+    hsv = [(i / N, 1, brightness) for i in range(N)]
+    colors = list(map(lambda c: colorsys.hsv_to_rgb(*c), hsv))
+    random.shuffle(colors)
+    return colors
 
 class BisenetModel(Model):
     def __init__(self, name, weights_id, device='GPU'):
@@ -408,7 +422,7 @@ class BisenetModel(Model):
 
     def _preprocess(self, image):
         img = Model.img2arr(image)
-        img = np.squeeze(img)
+        #img = np.squeeze(img)
         to_tensor = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
@@ -419,7 +433,48 @@ class BisenetModel(Model):
 
     def run(self, img):
         img = self._preprocess(img)
+        print(img.shape)
         out = self.model(img)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
         return out
 
+    """
+    def visualize(self, image, pred):
+        from matplotlib import cm
+        import numpy as np
+        N = len(np.unique(pred))
+        colours = cm.get_cmap('viridis', N)  # Change the string from 'viridis' to whatever you want from the above link
+        cmap = colours(np.linspace(0, 1, N))  # Obtain RGB colour map
+        cmap[0,-1] = 0  # Set alpha for label 0 to be 0
+        cmap[1:,-1] = 0.3  # Set the other alphas for the labels to be 0.3
+        output = cmap[pred.flatten()]
+        R, C = pred.shape[:2]
+        outpt = output.reshape((R, C, -1))
+        print(output.shape)
+    """
 
+    def visualize(self, image, pred):
+        from skimage import io
+        from skimage import color
+        from skimage import segmentation
+        #from skimage import label2rgb
+        import matplotlib.pyplot as plt
+        image = Model.img2arr(image)
+        print(np.unique(pred))
+        d = color.label2rgb(pred, image)
+        #print(d)
+        d = interval_mapping(d, 0.0, 1.0, 0, 255).astype('uint8')
+        #print(d.shape)
+        #print(d)
+        d = d.astype(np.uint8)
+        #print(d)
+        from PIL import Image
+        img = Image.fromarray(d)
+        img.show()
+
+def interval_mapping(image, from_min, from_max, to_min, to_max):
+    # map values from [from_min, from_max] to [to_min, to_max]
+    # image: input array
+    from_range = from_max - from_min
+    to_range = to_max - to_min
+    scaled = np.array((image - from_min) / float(from_range), dtype=float)
+    return to_min + (scaled * to_range)

@@ -16,7 +16,7 @@ class Model:
 
     @staticmethod
     def img2arr(img): 
-        if isinstance(img, str): img = np.array(Image.open(img))
+        if isinstance(img, str): img = np.array(Image.open(img).convert('RGB'))
         return img
 
     def _preprocess(self, image): 
