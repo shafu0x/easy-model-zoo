@@ -1,4 +1,4 @@
-# Easy-Model-Zoo 
+# easy-model-zoo 
 
 **This is still under heavy development. APIs WILL still change.**
 
@@ -17,7 +17,7 @@ Simply run:
 ```
 git clone https://github.com/SharifElfouly/easy-model-zoo
 cd easy-model-zoo
-pip3 install easy-model-zoo.whl
+pip3 install easy_model_zoo-0.2.4-py3-none-any.whl
 ```
 
 # Pre-trained Models
