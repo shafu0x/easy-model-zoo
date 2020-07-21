@@ -1,15 +1,14 @@
-from ptz import Model
+import sys
+sys.path.append("..")
 
-IMG_F = 'Full path to your image'
+print(sys.path)
 
-# Initialize the model object with a model name.
-# Note: The model automatically figures out what task it will be used for.
-# You can initialize it on the GPU or on the CPU with the device attribute.
-# If it can't find a GPU it will use the CPU.
-model = Model(model_name='YOLACT', device='GPU')
+from ..easy_model_zoo import ModelRunner
 
-# You can either run the model on an image path or on a numpy array.
-pred = model.run(IMG_F)
+img_path = '/home/sharif/Documents/easy-model-zoo/tests/test.png'
 
-# Visualize the results.
-model.visualize(pred)
+device = 'GPU'
+
+# EfficientDet
+model_runner = ModelRunner('EfficientDet-d0', device)
+model_runner.calc_inf_time(10)

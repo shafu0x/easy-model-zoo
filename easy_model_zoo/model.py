@@ -2,7 +2,7 @@ import time
 import numpy as np
 from PIL import Image
 
-from src.download import download_weights
+from .download import download_weights
 
 class Model:
     def __init__(self, name, weights_id, device='GPU'):

@@ -1,11 +1,11 @@
 import numpy as np
 from PIL import Image
 
-from src.efficientdet.efficientdetmodel import EfficientDetModel
-from src.bisenet.bisenet import BisenetModel 
-from src.yolact.run import YOLACTModel
+from .efficientdet import EfficientDetModel
+from .bisenet.bisenet import BisenetModel 
+from .yolact.run import YOLACTModel
 
-from src.download import download_weights
+from .download import download_weights
 
 # Google Drive ids for downloading the weights
 model_ids = {
@@ -51,40 +51,41 @@ class ModelRunner:
         return self.model.visualize(image, pred)
 
 if __name__ == '__main__':
-    img_path = '/home/sharif/Downloads/pp_gesicht.jpg'
+    img_path = '/home/sharif/Documents/easy-model-zoo/tests/test.png'
+
+    device = 'GPU'
 
     # EfficientDet
-    """
-    model_runner = ModelRunner('EfficientDet-d0', 'GPU')
-    pred = model_runner.run(img_path)
-    model_runner.visualize(img_path,pred)
-    model_runner = ModelRunner('EfficientDet-d1', 'GPU')
+    model_runner = ModelRunner('EfficientDet-d0', device)
+    #pred = model_runner.run(img_path)
     model_runner.calc_inf_time(10)
-    model_runner = ModelRunner('EfficientDet-d2', 'CPU')
+    model_runner = ModelRunner('EfficientDet-d1', device)
     model_runner.calc_inf_time(10)
-    model_runner = ModelRunner('EfficientDet-d3', 'GPU')
+    model_runner = ModelRunner('EfficientDet-d2', device)
     model_runner.calc_inf_time(10)
-    model_runner = ModelRunner('EfficientDet-d4', 'CPU')
+    model_runner = ModelRunner('EfficientDet-d3', device)
     model_runner.calc_inf_time(10)
-    model_runner = ModelRunner('EfficientDet-d5', 'GPU')
+    model_runner = ModelRunner('EfficientDet-d4', device)
     model_runner.calc_inf_time(10)
-    model_runner = ModelRunner('EfficientDet-d6', 'GPU')
+    model_runner = ModelRunner('EfficientDet-d5', device)
     model_runner.calc_inf_time(10)
-    model_runner = ModelRunner('EfficientDet-d7', 'GPU')
+    model_runner = ModelRunner('EfficientDet-d6', device)
+    model_runner.calc_inf_time(10)
+    model_runner = ModelRunner('EfficientDet-d7', device)
     model_runner.calc_inf_time(10)
     
 
     # BiseNet
-    model_runner = ModelRunner('Bisenet', 'GPU')
-    pred = model_runner.run(img_path)
-    model_runner.visualize(img_path, pred)
+    model_runner = ModelRunner('Bisenet', device)
+    model_runner.calc_inf_time(10)
+    #pred = model_runner.run(img_path)
+    #model_runner.visualize(img_path, pred)
     #model_runner.calc_inf_time(10)
-    """
     
     # YOLACT 
-    model_runner = ModelRunner('YOLACT-Resnet50', 'GPU')
-    #model_runner.calc_inf_time(10)
-    pred = model_runner.run(img_path)
+    model_runner = ModelRunner('YOLACT-Resnet50', device)
+    model_runner.calc_inf_time(10)
+    #pred = model_runner.run(img_path)
     #print(pred)
 
     vis = model_runner.visualize(img_path, pred)
