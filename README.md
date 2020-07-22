@@ -2,7 +2,7 @@
 
 **This is still under heavy development. APIs WILL still change.**
 
-Are you also frustrated by the installation process of different models? You are tired of Docker and C extensions failing while compiling. You just want to try out a new model? [I agree!](https://towardsdatascience.com/running-deep-learning-models-is-complicated-and-here-is-why-35a4e325486c) You just found the right place!
+Are you also frustrated by the installation process of different models? You are tired of Docker and C extensions failing while compiling. You just want to try out a new model? [I agree!](https://towardsdatascience.com/running-deep-learning-models-is-complicated-and-here-is-why-35a4e325486c) You just found the right place! Running deep learning models is [easy](https://medium.com/@selfouly/running-deep-learning-models-is-easy-d6ff7aaacc42) now.
 
 The only **requirement** of theses models is that they are pip installable.
 
