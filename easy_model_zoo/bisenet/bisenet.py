@@ -9,6 +9,7 @@ import numpy as np
 from PIL import Image
 
 from ..model import Model
+from .vis import *
 
 resnet18_url = 'https://download.pytorch.org/models/resnet18-5c106cde.pth'
 
@@ -453,23 +454,8 @@ class BisenetModel(Model):
     """
 
     def visualize(self, image, pred):
-        from skimage import io
-        from skimage import color
-        from skimage import segmentation
-        #from skimage import label2rgb
-        import matplotlib.pyplot as plt
-        image = Model.img2arr(image)
-        print(np.unique(pred))
-        d = color.label2rgb(pred, image)
-        #print(d)
-        d = interval_mapping(d, 0.0, 1.0, 0, 255).astype('uint8')
-        #print(d.shape)
-        #print(d)
-        d = d.astype(np.uint8)
-        #print(d)
-        from PIL import Image
-        img = Image.fromarray(d)
-        img.show()
+		mask = get_color_pallete(pred, 'citys')	
+		return mask
 
 def interval_mapping(image, from_min, from_max, to_min, to_max):
     # map values from [from_min, from_max] to [to_min, to_max]
