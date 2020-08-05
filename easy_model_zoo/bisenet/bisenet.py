@@ -422,6 +422,7 @@ class BisenetModel(Model):
         return model
 
     def _preprocess(self, image):
+        # TODO: Add batch processing
         img = Model.img2arr(image)
         #img = np.squeeze(img)
         to_tensor = transforms.Compose([
@@ -434,7 +435,6 @@ class BisenetModel(Model):
 
     def run(self, img):
         img = self._preprocess(img)
-        print(img.shape)
         out = self.model(img)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
         return out
 
