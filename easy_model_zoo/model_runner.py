@@ -51,10 +51,11 @@ class ModelRunner:
         return self.model.visualize(image, pred)
 
 if __name__ == '__main__':
-    img_path = '/home/sharif/Documents/easy-model-zoo/tests/test.png'
+    img_path = '/home/sharif/Documents/easy-model-zoo/tests/street.jpg'
 
     device = 'GPU'
 
+    """
     # EfficientDet
     model_runner = ModelRunner('EfficientDet-d0', device)
     #pred = model_runner.run(img_path)
@@ -73,19 +74,19 @@ if __name__ == '__main__':
     model_runner.calc_inf_time(10)
     model_runner = ModelRunner('EfficientDet-d7', device)
     model_runner.calc_inf_time(10)
-    
+    """
 
     # BiseNet
     model_runner = ModelRunner('Bisenet', device)
-    model_runner.calc_inf_time(10)
+    pred = model_runner.run(img_path)
     #pred = model_runner.run(img_path)
-    #model_runner.visualize(img_path, pred)
+    model_runner.visualize(img_path, pred)
     #model_runner.calc_inf_time(10)
     
+    """
     # YOLACT 
     model_runner = ModelRunner('YOLACT-Resnet50', device)
     model_runner.calc_inf_time(10)
     #pred = model_runner.run(img_path)
     #print(pred)
-
-    vis = model_runner.visualize(img_path, pred)
+    """

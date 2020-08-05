@@ -438,24 +438,10 @@ class BisenetModel(Model):
         out = self.model(img)[0].argmax(dim=1).squeeze().detach().cpu().numpy()
         return out
 
-    """
     def visualize(self, image, pred):
-        from matplotlib import cm
-        import numpy as np
-        N = len(np.unique(pred))
-        colours = cm.get_cmap('viridis', N)  # Change the string from 'viridis' to whatever you want from the above link
-        cmap = colours(np.linspace(0, 1, N))  # Obtain RGB colour map
-        cmap[0,-1] = 0  # Set alpha for label 0 to be 0
-        cmap[1:,-1] = 0.3  # Set the other alphas for the labels to be 0.3
-        output = cmap[pred.flatten()]
-        R, C = pred.shape[:2]
-        outpt = output.reshape((R, C, -1))
-        print(output.shape)
-    """
-
-    def visualize(self, image, pred):
-		mask = get_color_pallete(pred, 'citys')	
-		return mask
+        mask = get_color_pallete(pred, 'citys')	
+        mask.show()
+        return mask
 
 def interval_mapping(image, from_min, from_max, to_min, to_max):
     # map values from [from_min, from_max] to [to_min, to_max]
