@@ -76,9 +76,5 @@ Adding a new model is easy. Simply create a new directory inside easy_model_zoo 
 
 Just remember, it has to be pip installable.
 
-# Support
-
-<a href="https://www.buymeacoffee.com/sharifelfouly" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
 # License
 Feel free to do what you [want](https://github.com/SharifElfouly/pretrained-model-zoo/blob/master/LICENSE)! Just don't blame me if it doesn't work ;)
